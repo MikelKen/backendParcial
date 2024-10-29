@@ -2,6 +2,7 @@ package com.parcial.parcialbackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +24,10 @@ public class SpecialityController {
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> create(@RequestBody SpecialtyDTO request){
         return ResponseEntity.ok(specialtyService.createEspecialidad(request));
+    }
+
+    @GetMapping("/get-all")
+    public ResponseEntity<ResponseDTO> getSpecialitys(){
+        return ResponseEntity.ok(specialtyService.allSpecialys());
     }
 }

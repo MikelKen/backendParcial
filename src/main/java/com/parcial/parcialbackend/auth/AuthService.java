@@ -1,11 +1,14 @@
 package com.parcial.parcialbackend.auth;
 
+import java.util.List;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.entity.Users;
 import com.parcial.parcialbackend.repository.UserRepository;
 import com.parcial.parcialbackend.security.jwt.JwtService;
@@ -33,12 +36,14 @@ public class AuthService {
 
             return AuthResponse.builder()
             .data(token)
+            .success(true)
             .error(false)
             .message("Login successfully")
             .build();
         } catch (Exception e) {
             return AuthResponse.builder()
             .data(null)
+            .success(false)
             .error(true)
             .message(e.getMessage())
             .build();
@@ -70,12 +75,56 @@ public class AuthService {
         
         return AuthResponse.builder()
             .data(user)
+            .success(true)
             .error(false)
             .message("User created Successfully!!")
             .build();
         } catch (Exception e) {
             return AuthResponse.builder()
             .data(null)
+            .success(false)
+            .error(true)
+            .message(e.getMessage())
+            .build();
+        }
+    }
+
+    public ResponseDTO allUsers(){
+        try {
+
+            List<Users> users = userRepository.findAll();
+
+            return ResponseDTO.builder()
+            .data(users)
+            .success(true)
+            .error(false)
+            .message("Usuarios obtenidos")
+            .build();
+        } catch (Exception e) {
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
+            .error(true)
+            .message(e.getMessage())
+            .build();
+        }
+    }
+
+    public ResponseDTO allUsersAdmin(){
+        try {
+
+            List<Users> users = userRepository.findByRole(Role.ADMINISTRADOR);
+
+            return ResponseDTO.builder()
+            .data(users)
+            .success(true)
+            .error(false)
+            .message("Lista de administradores")
+            .build();
+        } catch (Exception e) {
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
             .error(true)
             .message(e.getMessage())
             .build();

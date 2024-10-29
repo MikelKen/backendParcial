@@ -1,11 +1,14 @@
 package com.parcial.parcialbackend.service;
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.parcial.parcialbackend.DTO.PacientDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.auth.Role;
+import com.parcial.parcialbackend.entity.Doctor;
 import com.parcial.parcialbackend.entity.Pacient;
 import com.parcial.parcialbackend.entity.Users;
 import com.parcial.parcialbackend.repository.PacientRepository;
@@ -68,4 +71,25 @@ public class PacientService {
         }
     }
 
+      public ResponseDTO allPacients(){
+        try {
+
+
+           List<Pacient> pacients = pacientRepository.findAll();
+
+            return ResponseDTO.builder()
+            .data(pacients)
+            .success(true)
+            .error(false)
+            .message("Usuarios obtenidos")
+            .build();
+        } catch (Exception e) {
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
+            .error(true)
+            .message(e.getMessage())
+            .build();
+        }
+    }
 }

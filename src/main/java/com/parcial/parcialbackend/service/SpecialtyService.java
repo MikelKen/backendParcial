@@ -1,5 +1,7 @@
 package com.parcial.parcialbackend.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.parcial.parcialbackend.DTO.SpecialtyDTO;
@@ -12,7 +14,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class SpecialtyService {
-    private final SpecialtyRepository especialidadRepository;
+    private final SpecialtyRepository specialtyRepository;
 
     public ResponseDTO createEspecialidad(SpecialtyDTO request){
         try {
@@ -20,7 +22,7 @@ public class SpecialtyService {
                             .name(request.getName())
                             .description(request.getDescription())
                             .build();
-            especialidadRepository.save(nuevo);
+                specialtyRepository.save(nuevo);
         return ResponseDTO.builder()
             .data(nuevo)
             .success(true)
@@ -37,4 +39,24 @@ public class SpecialtyService {
         }
     }
 
+    public ResponseDTO allSpecialys(){
+        try {
+
+           List<Specialty> specialitys = specialtyRepository.findAll();
+
+            return ResponseDTO.builder()
+            .data(specialitys)
+            .success(true)
+            .error(false)
+            .message("Usuarios obtenidos")
+            .build();
+        } catch (Exception e) {
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
+            .error(true)
+            .message(e.getMessage())
+            .build();
+        }
+    }
 }

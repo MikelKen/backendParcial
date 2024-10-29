@@ -1,5 +1,7 @@
 package com.parcial.parcialbackend.service;
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +47,7 @@ public class DoctorService {
           Specialty specialty = specialtyRepository.findByName(request.getSpeciality()).orElseThrow(()-> new RuntimeException("Specialty not found"));
 
           Doctor newDoctor = Doctor.builder()
-                            .id(request.getCi())
+                            .ci(request.getCi())
                             .user(user)
                             .specialty(specialty)
                             .build(); 
@@ -57,6 +59,27 @@ public class DoctorService {
             .success(true)
             .error(false)
             .message("Doctor created successful ")
+            .build();
+        } catch (Exception e) {
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
+            .error(true)
+            .message(e.getMessage())
+            .build();
+        }
+    }
+
+    public ResponseDTO allDoctors(){
+        try {
+
+           List<Doctor> doctors =  doctorRepository.findAll();
+
+            return ResponseDTO.builder()
+            .data(doctors)
+            .success(true)
+            .error(false)
+            .message("Usuarios obtenidos")
             .build();
         } catch (Exception e) {
             return ResponseDTO.builder()
