@@ -1,6 +1,5 @@
 package com.parcial.parcialbackend.service;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,17 +37,18 @@ public class DoctorService {
             
             userRepository.save(user);
 
-            Specialty specialty = specialtyRepository.findByName(request.getSpeciality()).orElseThrow(()-> new RuntimeException("Specialty not found"));
+          Specialty specialty = specialtyRepository.findByName(request.getSpeciality()).orElseThrow(()-> new RuntimeException("Specialty not found"));
 
-            // Doctor doctor = new Doctor();
-            // doctor.setId(request.getId());
-            // doctor.setUser(user);
-            // doctor.setSpecialty(specialty);
-
-            // Doctor newDoctor =  doctorRepository.save(doctor);
+          Doctor newDoctor = Doctor.builder()
+                            .id(request.getId())
+                            .user(user)
+                            .specialty(specialty)
+                            .build(); 
             
+            doctorRepository.save(newDoctor);
+
             return ResponseDTO.builder()
-            .data(null)
+            .data(newDoctor)
             .success(false)
             .error(true)
             .message("Doctor created successful ")
