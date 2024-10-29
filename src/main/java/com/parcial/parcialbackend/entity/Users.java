@@ -10,11 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.parcial.parcialbackend.auth.Role;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,8 +32,11 @@ import lombok.NoArgsConstructor;
 public class Users implements UserDetails{
     
     @Id
-    @GeneratedValue
-    Integer id;  //ci del usuario
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+
+    @Column(name = "ci", unique = true, nullable = false)
+    String ci;  //ci del usuario
 
     String name;
 
@@ -55,7 +59,7 @@ public class Users implements UserDetails{
     // Devuelve el email como nombre de usuario para autenticación
     @Override
     public String getUsername() {
-        return email;
+        return ci;
     }
 
     @Override

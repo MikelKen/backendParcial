@@ -22,6 +22,7 @@ public class ParcialbackendApplication {
 		return args -> {
 			if(usersRepository.count()==0){
 				Users admin = Users.builder()
+					.ci("123456789")
 					.name("Admin")
 					.email("admin@gmail.com")
 					.password(passwordEncoder.encode("12345"))

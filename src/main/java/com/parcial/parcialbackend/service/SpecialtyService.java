@@ -17,8 +17,8 @@ public class SpecialtyService {
     public ResponseDTO createEspecialidad(SpecialtyDTO request){
         try {
             Specialty nuevo = Specialty.builder()
-                            .name(request.getNombre())
-                            .description(request.getDescripcion())
+                            .name(request.getName())
+                            .description(request.getDescription())
                             .build();
             especialidadRepository.save(nuevo);
         return ResponseDTO.builder()

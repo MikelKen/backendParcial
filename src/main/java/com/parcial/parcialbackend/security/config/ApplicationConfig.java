@@ -36,8 +36,8 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return gmail -> userRepository.findByEmail(gmail)
-        .orElseThrow(()-> new UsernameNotFoundException("User not found"));
+        return ci -> userRepository.findByCi(ci)
+        .orElseThrow(()-> new UsernameNotFoundException("User not found with CI: "+ci));
     }
 
     @Bean

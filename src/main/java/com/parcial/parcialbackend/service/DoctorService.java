@@ -25,8 +25,12 @@ public class DoctorService {
 
     public ResponseDTO createDoctor(DoctorDTO request){
         try {
+
+            if(userRepository.existsByCi(String.valueOf(request.getCi()))){
+                throw new RuntimeException("Ya existe un usuario con este numero de CI");
+            }
             Users user = Users.builder()
-                        .id(request.getId())//ci
+                        .ci(String.valueOf(request.getCi()))//ci
                         .name(request.getName())
                         .email(request.getEmail())
                         .password(passwordEncoder.encode(request.getPassword()))
@@ -40,7 +44,7 @@ public class DoctorService {
           Specialty specialty = specialtyRepository.findByName(request.getSpeciality()).orElseThrow(()-> new RuntimeException("Specialty not found"));
 
           Doctor newDoctor = Doctor.builder()
-                            .id(request.getId())
+                            .id(request.getCi())
                             .user(user)
                             .specialty(specialty)
                             .build(); 
@@ -49,8 +53,8 @@ public class DoctorService {
 
             return ResponseDTO.builder()
             .data(newDoctor)
-            .success(false)
-            .error(true)
+            .success(true)
+            .error(false)
             .message("Doctor created successful ")
             .build();
         } catch (Exception e) {

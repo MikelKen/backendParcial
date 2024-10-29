@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class SpecialtyDTO {
     
-    String nombre;
+    String name;
 
-    String descripcion;
+    String description;
 }

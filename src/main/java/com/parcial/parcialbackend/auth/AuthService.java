@@ -2,6 +2,7 @@ package com.parcial.parcialbackend.auth;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,12 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request){
         try {
-            authenticationManager.authenticate((new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())));
+            
+            authenticationManager.authenticate((new UsernamePasswordAuthenticationToken(String.valueOf(request.getCi()), request.getPassword())));
+            
+            Users user = userRepository.findByCi(String.valueOf(request.getCi()))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with CI: " + request.getCi()));
 
-            Users user = userRepository.findByEmail(request.getEmail()).orElseThrow();
             String token = jwtService.getToken(user);
 
             return AuthResponse.builder()
@@ -47,17 +51,18 @@ public class AuthService {
                 throw new Exception("Porfavor proporcione correo");
             }
             if(request.getPassword() == null || request.getPassword().isEmpty()){
-                throw new Exception("Porfavro proporcione contraseña"); 
+                throw new Exception("Porfavor proporcione contraseña"); 
             }
-            if(request.getNombre()==null || request.getNombre().isEmpty()){
+            if(request.getName()==null || request.getName().isEmpty()){
                 throw new Exception("Porfavor porporcione nombre");
             }
         Users user = Users.builder()
-            .name(request.getNombre())
+            .ci(String.valueOf(request.ci))
+            .name(request.getName())
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
-            .phone(request.getTelefono())
-            .address(request.getDireccion())
+            .phone(request.getPhone())
+            .address(request.getAddress())
             .role(Role.ADMINISTRADOR)
             .build();
         
