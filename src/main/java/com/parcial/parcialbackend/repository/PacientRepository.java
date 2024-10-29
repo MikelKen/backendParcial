@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.parcial.parcialbackend.entity.Doctor;
+import com.parcial.parcialbackend.entity.Pacient;
 
 @Repository
-public interface DoctorRepository extends JpaRepository<Doctor,Integer> {
-    Optional<Doctor> findByCi(Integer ci);
+public interface PacientRepository extends JpaRepository<Pacient, Integer>{
+    Optional<Pacient> findByCi(Integer ci);
 
     boolean existsByCi(Integer ci);
 }

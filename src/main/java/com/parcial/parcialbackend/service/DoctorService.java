@@ -29,6 +29,7 @@ public class DoctorService {
             if(userRepository.existsByCi(String.valueOf(request.getCi()))){
                 throw new RuntimeException("Ya existe un usuario con este numero de CI");
             }
+            
             Users user = Users.builder()
                         .ci(String.valueOf(request.getCi()))//ci
                         .name(request.getName())
