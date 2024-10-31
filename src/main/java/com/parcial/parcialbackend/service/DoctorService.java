@@ -9,7 +9,7 @@ import com.parcial.parcialbackend.DTO.DoctorDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.auth.Role;
 import com.parcial.parcialbackend.entity.Doctor;
-import com.parcial.parcialbackend.entity.Specialty;
+import com.parcial.parcialbackend.entity.Speciality;
 import com.parcial.parcialbackend.entity.Users;
 import com.parcial.parcialbackend.repository.DoctorRepository;
 import com.parcial.parcialbackend.repository.SpecialtyRepository;
@@ -44,12 +44,12 @@ public class DoctorService {
             
             userRepository.save(user);
 
-          Specialty specialty = specialtyRepository.findByName(request.getSpeciality()).orElseThrow(()-> new RuntimeException("Specialty not found"));
+          Speciality speciality = specialtyRepository.findByName(request.getSpeciality()).orElseThrow(()-> new RuntimeException("Specialty not found"));
 
           Doctor newDoctor = Doctor.builder()
                             .ci(request.getCi())
                             .user(user)
-                            .specialty(specialty)
+                            .speciality(speciality)
                             .build(); 
             
             doctorRepository.save(newDoctor);

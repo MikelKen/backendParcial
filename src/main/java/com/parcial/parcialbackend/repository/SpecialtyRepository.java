@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.parcial.parcialbackend.entity.Specialty;
+import com.parcial.parcialbackend.entity.Speciality;
 
-public interface SpecialtyRepository extends JpaRepository<Specialty, Integer> {
-    Optional<Specialty> findByName(String name);
+public interface SpecialtyRepository extends JpaRepository<Speciality, Integer> {
+    Optional<Speciality> findByName(String name);
 }

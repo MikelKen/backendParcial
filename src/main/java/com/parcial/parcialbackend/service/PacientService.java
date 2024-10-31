@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.parcial.parcialbackend.DTO.PacientDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.auth.Role;
-import com.parcial.parcialbackend.entity.Doctor;
 import com.parcial.parcialbackend.entity.Pacient;
 import com.parcial.parcialbackend.entity.Users;
 import com.parcial.parcialbackend.repository.PacientRepository;

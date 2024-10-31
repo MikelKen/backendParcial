@@ -1,14 +1,10 @@
 package com.parcial.parcialbackend.entity;
 
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,21 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table
-public class Doctor {
-    
+public class Speciality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
-    private Integer ci;
+    private String name;
 
-    @OneToOne
-    @JoinColumn(name = "ci_user", referencedColumnName = "ci", unique = true)
-    private Users user;
-
-    @ManyToOne
-    @JoinColumn(name = "speciality_id", referencedColumnName = "id")
-    private Speciality speciality;
+    private String description;
 
 }

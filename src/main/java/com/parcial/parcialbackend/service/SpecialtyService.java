@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.parcial.parcialbackend.DTO.SpecialtyDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
-import com.parcial.parcialbackend.entity.Specialty;
+import com.parcial.parcialbackend.entity.Speciality;
 import com.parcial.parcialbackend.repository.SpecialtyRepository;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class SpecialtyService {
 
     public ResponseDTO createEspecialidad(SpecialtyDTO request){
         try {
-            Specialty nuevo = Specialty.builder()
+            Speciality nuevo = Speciality.builder()
                             .name(request.getName())
                             .description(request.getDescription())
                             .build();
@@ -42,7 +42,7 @@ public class SpecialtyService {
     public ResponseDTO allSpecialys(){
         try {
 
-           List<Specialty> specialitys = specialtyRepository.findAll();
+           List<Speciality> specialitys = specialtyRepository.findAll();
 
             return ResponseDTO.builder()
             .data(specialitys)
