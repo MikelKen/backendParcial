@@ -18,4 +18,5 @@ public class PacientDTO {
     Integer age; //edad
     String sexo;
 
+    
 }

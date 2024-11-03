@@ -1,6 +1,8 @@
 package com.parcial.parcialbackend.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.parcial.parcialbackend.entity.Users;
 import com.parcial.parcialbackend.repository.PacientRepository;
 import com.parcial.parcialbackend.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -70,7 +73,7 @@ public class PacientService {
         }
     }
 
-      public ResponseDTO allPacients(){
+    public ResponseDTO allPacients(){
         try {
 
 
@@ -91,4 +94,40 @@ public class PacientService {
             .build();
         }
     }
+
+    public ResponseDTO getPacientID(HttpServletRequest request){
+      
+        try {
+
+           String pacientId = (String) request.getAttribute("userId");
+           
+            Pacient pacient = pacientRepository.findByCi(Integer.parseInt(pacientId)).orElse(null);
+
+            Map<String, Object> pacientData = new HashMap<>();
+            pacientData.put("id", pacient.getId());
+            pacientData.put("ci", pacient.getCi());
+            pacientData.put("dateOfBirth", pacient.getDateOfBirth());
+            pacientData.put("age", pacient.getAge());
+            pacientData.put("sexo", pacient.getSexo());
+            pacientData.put("name", pacient.getUser().getName());
+            pacientData.put("phone", pacient.getUser().getPhone());
+            pacientData.put("address", pacient.getUser().getAddress());
+
+
+            return ResponseDTO.builder()
+            .data(pacientData)
+            .success(true)
+            .error(false)
+            .message("Usuarios obtenidos")
+            .build();
+        } catch (Exception e) {
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
+            .error(true)
+            .message(e.getMessage())
+            .build();
+        }
+    }
+
 }

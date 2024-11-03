@@ -26,7 +26,7 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request){
         try {
-            
+            System.out.println("login "+ request );
             authenticationManager.authenticate((new UsernamePasswordAuthenticationToken(String.valueOf(request.getCi()), request.getPassword())));
             
             Users user = userRepository.findByCi(String.valueOf(request.getCi()))

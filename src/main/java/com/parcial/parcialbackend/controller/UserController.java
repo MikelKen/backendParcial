@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.auth.AuthService;
-
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -16,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     
     private final AuthService aunAuthService;
+
 
     @GetMapping("/get-all")
     public ResponseEntity<ResponseDTO> getUsers(){
@@ -26,4 +26,7 @@ public class UserController {
     public ResponseEntity<ResponseDTO> getAdmins(){
         return ResponseEntity.ok(aunAuthService.allUsersAdmin());
     }
+
+
+    
 }

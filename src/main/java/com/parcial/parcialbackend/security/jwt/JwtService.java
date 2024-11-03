@@ -24,7 +24,7 @@ public class JwtService {
 
     public String getToken(Users user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id",user.getCi());
+        claims.put("ci",user.getCi());
         claims.put("nombre",user.getName());
         claims.put("email",user.getEmail());
         claims.put("role",user.getRole());
@@ -38,7 +38,7 @@ public class JwtService {
         return Jwts
             .builder()
             .claims(extraClaims)
-            .subject(user.getEmail())
+            .subject(user.getCi())//.subject(user.getEmail())
             .issuedAt(new Date(System.currentTimeMillis()))
             .expiration(new Date(System.currentTimeMillis()+10000*60*24))
             .signWith(getKey())
@@ -56,8 +56,7 @@ public class JwtService {
 
     public boolean isTokenValid(String token, Optional<Users> userDet){
         final String username = getUsernameFromToken(token);
-        return userDet.map(users -> username.equals(users.getEmail()) && !isTokenExpired(token)).orElse(false);
-        
+        return userDet.map(users -> username.equals(users.getCi()) && !isTokenExpired(token)).orElse(false);        
     }
 
     private Claims getAllClaims(String token){

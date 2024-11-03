@@ -13,6 +13,7 @@ import com.parcial.parcialbackend.DTO.PacientDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.service.PacientService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -30,5 +31,11 @@ public class PacientController {
     @GetMapping("/get-all")
     public ResponseEntity<ResponseDTO> getPacients(){
         return ResponseEntity.ok(pacientService.allPacients());
+    }
+
+    @GetMapping("/get-pacient") //mandar token
+    public ResponseEntity<ResponseDTO> getPacient(HttpServletRequest request){
+
+        return ResponseEntity.ok(pacientService.getPacientID(request));
     }
 }
