@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class PacientService {
+    
     private UserRepository userRepository;
     private PacientRepository pacientRepository;
     private PasswordEncoder passwordEncoder;

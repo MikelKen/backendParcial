@@ -1,7 +1,6 @@
 package com.parcial.parcialbackend.entity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,24 +20,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table
-public class TimeBlock {//CITAS O FICHAS
+public class Medical_Record { //historia clinica
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Integer id;
 
-    private LocalDate date ; // fecha
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private String state;
-
-    @ManyToOne
-    @JoinColumn(name = "openingHour", referencedColumnName = "id")
-    private OpeningHour openingHour;
+    private Date creation_date;
 
     @ManyToOne
     @JoinColumn(name = "paient_id", referencedColumnName = "id")
     private Pacient pacient;
-
-
 }

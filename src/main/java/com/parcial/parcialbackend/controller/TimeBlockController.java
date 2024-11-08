@@ -32,7 +32,7 @@ public class TimeBlockController {
         return ResponseEntity.ok(timeBlockService.getAviableFich(id));
     }
 
-    @GetMapping("/get-allDispon/{id}") //retorna todas las fichas de un medico mandar el ci
+    @GetMapping("/get-allDispon/{id}") //retorna todas las fichas dispoinbles de un medico mandar el ci
     public ResponseEntity<ResponseDTO> getFichDisponDoctor(@PathVariable Integer id){
         return ResponseEntity.ok(timeBlockService.getFichDispon(id));
     }

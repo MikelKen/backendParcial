@@ -70,6 +70,56 @@ public class DoctorService {
         }
     }
 
+    public ResponseDTO createdDoctor(DoctorDTO dto){
+        try {
+            if(doctorRepository.existsByCi(dto.getCi())){
+                throw new RuntimeException("Ya existe un doctor con este numero de CI");
+            }
+            boolean userExit = userRepository.existsByCi(String.valueOf(dto.getCi()));
+
+            Users user ;
+            if(userExit == false){
+                 user = Users.builder()
+                            .ci(String.valueOf(dto.getCi()))
+                            .name(dto.getName())
+                            .email(dto.getEmail())
+                            .password(passwordEncoder.encode(dto.getPassword()))
+                            .phone(dto.getPhone())
+                            .address(dto.getAddress())
+                            .role(Role.MEDICO)
+                            .build();
+                userRepository.save(user);
+            }else {
+                user = userRepository.findByCi(String.valueOf(dto.getCi())).orElseThrow(()-> new RuntimeException("User not found"));
+            }
+
+            Speciality speciality = specialtyRepository.findByName(dto.getSpeciality()).orElseThrow(()-> new RuntimeException("Specialty not found"));
+
+
+            Doctor newDoctor = Doctor.builder()
+                        .ci(dto.getCi())
+                        .user(user)
+                        .speciality(speciality)
+                        .build(); 
+
+            doctorRepository.save(newDoctor);
+
+            return ResponseDTO.builder()
+            .data(newDoctor)
+            .success(true)
+            .error(false)
+            .message("Pacient created successful ")
+            .build();
+        } catch (Exception e) {
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
+            .error(true)
+            .message(e.getMessage())
+            .build();
+        }
+    }
+
     public ResponseDTO allDoctors(){
         try {
 

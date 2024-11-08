@@ -1,11 +1,14 @@
 package com.parcial.parcialbackend.entity;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,20 +22,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table
-public class AttentionSheet {
+public class Consultation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String state;  //estado
+    private Date date;
 
-    @OneToOne
-    @JoinColumn(name = "timeBlock", referencedColumnName = "id")
-    private TimeBlock timeBlock;
+    private String diagnosis;
+
+    private String state;
+
+    private String observation;
 
     @ManyToOne
-    @JoinColumn(name = "paient_id", referencedColumnName = "id")
-    private Pacient pacient;
+    @JoinColumn(name = "doctorId", referencedColumnName = "id")
+    private Doctor doctor;
+
+    @OneToOne
+    @JoinColumn(name = "preConcultationId", referencedColumnName = "id" )
+    private Pre_Consultation pre_Consultation;
+
+    @ManyToOne
+    @JoinColumn(name = "medicalRecordId", referencedColumnName = "id")
+    private Medical_Record medical_Record; // historia clinica
     
 }
