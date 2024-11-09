@@ -61,12 +61,7 @@ public class DoctorService {
             .message("Doctor created successful ")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -111,12 +106,7 @@ public class DoctorService {
             .message("Pacient created successful ")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -132,12 +122,7 @@ public class DoctorService {
             .message("Usuarios obtenidos")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 

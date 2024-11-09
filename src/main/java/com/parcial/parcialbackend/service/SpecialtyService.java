@@ -51,12 +51,7 @@ public class SpecialtyService {
             .message("Usuarios obtenidos")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 }

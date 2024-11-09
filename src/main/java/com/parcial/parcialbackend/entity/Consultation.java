@@ -1,6 +1,7 @@
 package com.parcial.parcialbackend.entity;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Consultation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Date date;
+    private LocalDate date;
 
     private String diagnosis;
 
@@ -42,10 +43,10 @@ public class Consultation {
 
     @OneToOne
     @JoinColumn(name = "preConcultationId", referencedColumnName = "id" )
-    private PreConsultation pre_Consultation;
+    private PreConsultation preConsultation;
 
     @ManyToOne
     @JoinColumn(name = "medicalRecordId", referencedColumnName = "id")
-    private Medical_Record medical_Record; // historia clinica
+    private MedicalRecord medicalRecord; // historia clinica
     
 }

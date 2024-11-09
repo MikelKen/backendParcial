@@ -64,7 +64,7 @@ public class OpeningHourService {
     public ResponseDTO createOpeningHourBlock(OpeningHourDTO dto){
         try {
             Doctor doctor = doctorRepository.findByCi(dto.getDoctorId()).orElseThrow(()-> new RuntimeException("Doctor not found"));
-            System.out.println("insetrando¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
+     
             OpeningHour openingHour = OpeningHour.builder()
                                     .dayWeek(dto.getDayWeek())
                                     .turn(dto.getTurn())
@@ -73,7 +73,7 @@ public class OpeningHourService {
                                     .ci_doctor(dto.getDoctorId())
                                     .doctor(doctor)
                                     .build();
-            System.out.println("insetrando¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
+           
             openingHourRepository.save(openingHour);
 
             List<TimeBlock> timeBlocks = new ArrayList<>();
@@ -100,13 +100,7 @@ public class OpeningHourService {
             .message("Opening Hour created successful ")
             .build();
         } catch (Exception e) {
-            System.out.println("ERROR: "+e);
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message("Opening hour error "+e)
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -137,12 +131,7 @@ public class OpeningHourService {
             .message(" ")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message("Error "+e)
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
     

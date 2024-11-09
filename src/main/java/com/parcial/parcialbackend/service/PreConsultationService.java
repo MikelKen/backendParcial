@@ -54,12 +54,7 @@ public class PreConsultationService {
             .message("Pre consulta creada exitosamente")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -98,12 +93,7 @@ public class PreConsultationService {
             .message(" ")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message("Error "+e)
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -138,12 +128,7 @@ public class PreConsultationService {
             .message(" ")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message("Error "+e)
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 

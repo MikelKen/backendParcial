@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.parcial.parcialbackend.DTO.PacientDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.auth.Role;
+import com.parcial.parcialbackend.entity.MedicalRecord;
 import com.parcial.parcialbackend.entity.Pacient;
 import com.parcial.parcialbackend.entity.Users;
+import com.parcial.parcialbackend.repository.MedicalRecordRepository;
 import com.parcial.parcialbackend.repository.PacientRepository;
 import com.parcial.parcialbackend.repository.UserRepository;
 
@@ -25,6 +27,7 @@ public class PacientService {
     private UserRepository userRepository;
     private PacientRepository pacientRepository;
     private PasswordEncoder passwordEncoder;
+    private MedicalRecordRepository medicalRecordRepository;
 
     public ResponseDTO createPacient(PacientDTO request){
         try {
@@ -58,6 +61,10 @@ public class PacientService {
                             .build();
             pacientRepository.save(pacient);
 
+            MedicalRecord medicalRecord = MedicalRecord.builder()
+                                        .pacient(pacient)
+                                        .build();
+            medicalRecordRepository.save(medicalRecord);
             return ResponseDTO.builder()
             .data(pacient)
             .success(true)
@@ -87,12 +94,7 @@ public class PacientService {
             .message("Usuarios obtenidos")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -122,12 +124,7 @@ public class PacientService {
             .message("Usuarios obtenidos")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 

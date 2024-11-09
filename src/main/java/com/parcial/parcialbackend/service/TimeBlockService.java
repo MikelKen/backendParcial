@@ -94,12 +94,7 @@ public class TimeBlockService {
             .message("Ficha medicas")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -143,12 +138,7 @@ public class TimeBlockService {
             .message("Ficha medicas obtenidas")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -188,12 +178,7 @@ public class TimeBlockService {
             .message("Ficha medicas obtenidas")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -229,12 +214,7 @@ public class TimeBlockService {
             .message("Ficha reservada exitosa")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 }
