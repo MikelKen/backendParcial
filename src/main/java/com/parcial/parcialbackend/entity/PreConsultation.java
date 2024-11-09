@@ -1,7 +1,7 @@
 package com.parcial.parcialbackend.entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "pre_consultation")
-public class Pre_Consultation {
+public class PreConsultation {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,11 +39,11 @@ public class Pre_Consultation {
     @Column(precision = 5, scale = 2)
     private BigDecimal weight;
 
-    private Date date;
+    private LocalDate date;
 
     @OneToOne
-    @JoinColumn(name = "ci_user", referencedColumnName = "ci", unique = true)
-    private Users user;
+    @JoinColumn(name = "enfermeraId", referencedColumnName = "ci", unique = true)
+    private Enfermera enfermera;
 
     @ManyToOne
     @JoinColumn(name = "cita_id", referencedColumnName = "id")

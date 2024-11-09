@@ -42,7 +42,7 @@ public class Consultation {
 
     @OneToOne
     @JoinColumn(name = "preConcultationId", referencedColumnName = "id" )
-    private Pre_Consultation pre_Consultation;
+    private PreConsultation pre_Consultation;
 
     @ManyToOne
     @JoinColumn(name = "medicalRecordId", referencedColumnName = "id")
