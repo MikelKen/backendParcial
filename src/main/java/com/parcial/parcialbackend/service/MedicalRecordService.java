@@ -51,8 +51,24 @@ public class MedicalRecordService {
 
     public ResponseDTO getAllByIdPacient(){
         try {
-            List<MedicalRecord> medicalRecords = medicalRecordRepository.findAll();
-            
+            List<Map<String,Object>> medicalRecords = medicalRecordRepository.findAll().stream()
+            .map(record -> {
+                Map<String, Object> mappedRecord = new HashMap<>();
+                mappedRecord.put("id", record.getId());
+                mappedRecord.put("creationDate", record.getCreationDate());
+                mappedRecord.put("creationTime", record.getCreationTime());
+                mappedRecord.put("ci", record.getPacient().getCi());
+                mappedRecord.put("namePacient", record.getPacient().getUser().getName());
+                mappedRecord.put("dateOfBirth", record.getPacient().getDateOfBirth());
+                mappedRecord.put("age", record.getPacient().getAge());
+                mappedRecord.put("sexo", record.getPacient().getSexo());
+                mappedRecord.put("name", record.getPacient().getUser().getName());
+                mappedRecord.put("email", record.getPacient().getUser().getEmail());
+                mappedRecord.put("phone", record.getPacient().getUser().getPhone());
+                
+                return mappedRecord;
+            })
+            .collect(Collectors.toList());
 
             return ResponseDTO.builder()
             .data(medicalRecords)
