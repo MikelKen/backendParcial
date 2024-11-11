@@ -17,4 +17,10 @@ public class TimeBlockDTO {
     private Integer fichaId;
     private Integer pacientCi;
 
+    //para prueba
+    private String date1;
+    private String day1;
+    private String time1;
+    
+
 }

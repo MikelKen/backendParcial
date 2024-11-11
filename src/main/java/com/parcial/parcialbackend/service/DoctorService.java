@@ -1,6 +1,10 @@
 package com.parcial.parcialbackend.service;
 
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -125,5 +129,32 @@ public class DoctorService {
             throw new RuntimeException(e.getMessage()); 
         }
     }
+
+    public ResponseDTO allDoctorsSpeciality(DoctorDTO dto){
+        try {
+
+           List<Map<String,Object>> doctors =  (List<Map<String, Object>>) doctorRepository.findBySpecialityName(dto.getSpeciality()).stream().map(record -> {
+            Map<String,Object> doctorSpecial = new HashMap<>();
+            doctorSpecial.put("id", record.getCi());
+            doctorSpecial.put("nameDoctor", record.getUser().getName());
+            doctorSpecial.put("speciality", record.getSpeciality().getName());
+            doctorSpecial.put("description", record.getSpeciality().getDescription());
+
+            return doctorSpecial;
+           }).collect(Collectors.toList());
+           
+
+
+            return ResponseDTO.builder()
+            .data(doctors)
+            .success(true)
+            .error(false)
+            .message("Usuarios obtenidos")
+            .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage()); 
+        }
+    }
+
 
 }

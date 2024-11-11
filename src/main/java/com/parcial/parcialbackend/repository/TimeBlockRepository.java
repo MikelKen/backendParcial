@@ -2,7 +2,9 @@ package com.parcial.parcialbackend.repository;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,5 +32,12 @@ List<TimeBlock> findAllFichasByDoctorCi(Integer doctorCi);
 @Query("SELECT t FROM TimeBlock t WHERE t.pacient.id = :pacientId AND t.date = :date AND t.state = 'RESERVADO'")
 List<TimeBlock> findReservedFichasByPacientAndDate(@Param("pacientId") Integer pacientId, @Param("date") LocalDate date);
 
+@Query("SELECT t FROM TimeBlock t WHERE t.pacient.ci = :ci")
+    List<TimeBlock> findAllByPacientCi(@Param("ci") Integer ci);
+
+    @Query("SELECT t FROM TimeBlock t WHERE t.pacient.ci = :ci AND t.date = :date")
+    List<TimeBlock> findByPacientCiAndDate(@Param("ci") Integer ci, @Param("date") LocalDate date);
+
+  
 
 }

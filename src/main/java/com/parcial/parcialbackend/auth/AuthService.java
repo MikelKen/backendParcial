@@ -2,6 +2,7 @@ package com.parcial.parcialbackend.auth;
 
 import java.util.List;
 
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.entity.Users;
+
 import com.parcial.parcialbackend.repository.UserRepository;
 import com.parcial.parcialbackend.security.jwt.JwtService;
 
@@ -23,6 +25,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+
 
     public AuthResponse login(LoginRequest request){
         try {
@@ -41,14 +44,10 @@ public class AuthService {
             .message("Login successfully")
             .build();
         } catch (Exception e) {
-            return AuthResponse.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
+
 
     public AuthResponse register(RegisterRequest request){
         try {
@@ -80,12 +79,7 @@ public class AuthService {
             .message("User created Successfully!!")
             .build();
         } catch (Exception e) {
-            return AuthResponse.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -101,12 +95,7 @@ public class AuthService {
             .message("Usuarios obtenidos")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 
@@ -122,12 +111,7 @@ public class AuthService {
             .message("Lista de administradores")
             .build();
         } catch (Exception e) {
-            return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message(e.getMessage())
-            .build();
+            throw new RuntimeException(e.getMessage()); 
         }
     }
 }

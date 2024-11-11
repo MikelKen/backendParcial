@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.parcial.parcialbackend.DTO.ResponseDTO;
-import com.parcial.parcialbackend.entity.MedicalRecord;
+
 import com.parcial.parcialbackend.repository.MedicalRecordRepository;
 
 import lombok.AllArgsConstructor;
@@ -65,7 +65,7 @@ public class MedicalRecordService {
                 mappedRecord.put("name", record.getPacient().getUser().getName());
                 mappedRecord.put("email", record.getPacient().getUser().getEmail());
                 mappedRecord.put("phone", record.getPacient().getUser().getPhone());
-                
+
                 return mappedRecord;
             })
             .collect(Collectors.toList());

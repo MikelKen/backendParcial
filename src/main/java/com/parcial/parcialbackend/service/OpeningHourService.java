@@ -100,7 +100,13 @@ public class OpeningHourService {
             .message("Opening Hour created successful ")
             .build();
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage()); 
+            //throw new RuntimeException(e.getMessage()); 
+            return ResponseDTO.builder()
+            .data(null)
+            .success(false)
+            .error(true)
+            .message("error ")
+            .build();
         }
     }
 

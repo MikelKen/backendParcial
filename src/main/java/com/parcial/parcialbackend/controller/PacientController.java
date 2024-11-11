@@ -38,4 +38,10 @@ public class PacientController {
 
         return ResponseEntity.ok(pacientService.getPacientID(request));
     }
+
+    @GetMapping("/get-pacientMovil") //mandar token
+    public ResponseEntity<ResponseDTO> getPacientMovil(HttpServletRequest request){
+
+        return ResponseEntity.ok(pacientService.getPacientIdMovil(request));
+    }
 }

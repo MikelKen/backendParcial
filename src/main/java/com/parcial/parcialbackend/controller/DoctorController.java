@@ -24,11 +24,16 @@ public class DoctorController {
     
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> create(@RequestBody DoctorDTO request){
-        return ResponseEntity.ok(doctorService.createDoctor(request));
+        return ResponseEntity.ok(doctorService.createdDoctor(request));
     }
 
     @GetMapping("/get-all")
     public ResponseEntity<ResponseDTO> getDoctors(){
         return ResponseEntity.ok(doctorService.allDoctors());
+    }
+
+    @GetMapping("/get-doctorSpecial")
+    public ResponseEntity<ResponseDTO> getDoctorsSpeciality(@RequestBody DoctorDTO dto){
+        return ResponseEntity.ok(doctorService.allDoctorsSpeciality(dto));
     }
 }

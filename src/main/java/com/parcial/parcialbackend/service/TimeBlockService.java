@@ -26,6 +26,7 @@ import com.parcial.parcialbackend.repository.OpeningHourRepository;
 import com.parcial.parcialbackend.repository.PacientRepository;
 import com.parcial.parcialbackend.repository.TimeBlockRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -144,6 +145,8 @@ public class TimeBlockService {
 
     public ResponseDTO getFichDispon(Integer doctorCi){
         try {
+
+          
             Optional<Doctor> optionalDoctor = doctorRepository.findByCi(doctorCi);
             Doctor doctor = optionalDoctor.orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
 
@@ -162,6 +165,7 @@ public class TimeBlockService {
                 fichaMap.put("id", ficha.getId());
                 fichaMap.put("date",ficha.getDate().toString());
                 fichaMap.put("day", ficha.getOpeningHour().getDayWeek());
+                fichaMap.put("turn", ficha.getOpeningHour().getTurn());
                 fichaMap.put("startTime", ficha.getStartTime().toString());
                 fichaMap.put("endTime", ficha.getEndTime().toString());
                 fichaMap.put("state", ficha.getState());
@@ -170,7 +174,7 @@ public class TimeBlockService {
 
             response.put("fichas", fichasList);
 
-
+            System.out.println(response);
             return ResponseDTO.builder()
             .data(response)
             .success(true)
@@ -217,4 +221,77 @@ public class TimeBlockService {
             throw new RuntimeException(e.getMessage()); 
         }
     }
+
+
+    public ResponseDTO prueba(TimeBlockDTO dto,HttpServletRequest request){
+        try {
+           String pacientId = (String)request.getAttribute("userId");
+        System.out.println("++++++++++++++++++++++"+pacientId+"+++++++++++++++="+dto.getFichaId());
+           Optional<TimeBlock> optionalTimeBlock = timeBlockRepository.findById(dto.getFichaId());
+           TimeBlock timeBlock = optionalTimeBlock.orElseThrow(() -> new RuntimeException("Ficha no encontrada"));
+
+           if (!"DISPONIBLE".equals(timeBlock.getState())) {
+               throw new RuntimeException("La ficha no disponible");
+           }
+
+           Optional<Pacient> optionalPacient = pacientRepository.findByCi(Integer.valueOf(pacientId));
+           Pacient pacient = optionalPacient.orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+           LocalDate dateToReserve = timeBlock.getDate();
+           List<TimeBlock> reservedFichas = timeBlockRepository.findReservedFichasByPacientAndDate(pacient.getId(), dateToReserve);
+
+           if (!reservedFichas.isEmpty()) {
+               throw new RuntimeException("El paciente ya tiene una ficha reservada para este día.");
+           }
+      
+           timeBlock.setState("RESERVADO");
+           timeBlock.setPacient(pacient); 
+           timeBlockRepository.save(timeBlock);
+            return ResponseDTO.builder()
+            .data(null)
+            .success(true)
+            .error(false)
+            .message("Ficha medicas")
+            .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage()); 
+        }
+    }
+
+     public ResponseDTO getCitaByPacientID(HttpServletRequest request){
+     
+        try {
+
+           String pacientId = (String)request.getAttribute("userId");
+           
+           List<Map<String, Object>> timeBlocks = timeBlockRepository.findAllByPacientCi(Integer.parseInt(pacientId)).stream().map(record -> {
+                Map<String,Object> citasRecord = new HashMap<>();
+                citasRecord.put("id",record.getId());
+                citasRecord.put("date",record.getDate().toString());
+                citasRecord.put("startTime",record.getStartTime().toString());
+                citasRecord.put("status",record.getState());
+                citasRecord.put("dayWeek",record.getOpeningHour().getDayWeek());
+                citasRecord.put("idDoctor",record.getOpeningHour().getCi_doctor());
+                citasRecord.put("nameDoctor",record.getOpeningHour().getDoctor().getUser().getName());
+                citasRecord.put("speciality",record.getOpeningHour().getDoctor().getSpeciality().getName());
+                citasRecord.put("idPacient",record.getPacient().getCi());
+                citasRecord.put("namePacient",record.getPacient().getUser().getName());
+
+                return citasRecord;
+           })
+           .collect(Collectors.toList());
+
+           System.out.println(timeBlocks);
+            return ResponseDTO.builder()
+            .data(timeBlocks)
+            .success(true)
+            .error(false)
+            .message("Usuarios obtenidos")
+            .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage()); 
+        }
+    }
+
+
 }

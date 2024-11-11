@@ -14,6 +14,7 @@ import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.DTO.TimeBlockDTO;
 import com.parcial.parcialbackend.service.TimeBlockService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -40,5 +41,19 @@ public class TimeBlockController {
     @PutMapping("/reserve-ficha") //mandar en el body el id de la ficha y el ci del paciente
     public ResponseEntity<ResponseDTO> reseveFicha(@RequestBody TimeBlockDTO dto){
         return ResponseEntity.ok(timeBlockService.reserveFich(dto));
+    }
+
+    @PostMapping("/prueba")
+    public ResponseEntity<ResponseDTO> prueba(@RequestBody TimeBlockDTO dto,HttpServletRequest request){
+
+        System.out.println("LLEGO CON ESTO S: ");
+        System.out.println(dto);
+        return ResponseEntity.ok(timeBlockService.prueba(dto,request));
+    }
+
+    @GetMapping("/get-citaPacient") //mandar token para retornar todas las citas de un paciente
+    public ResponseEntity<ResponseDTO> getCitaByPacient(HttpServletRequest request){
+        System.out.println("lllegooooo___________________________");
+        return ResponseEntity.ok(timeBlockService.getCitaByPacientID(request));
     }
 }
