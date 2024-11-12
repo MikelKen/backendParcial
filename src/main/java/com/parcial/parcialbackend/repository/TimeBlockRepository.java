@@ -35,7 +35,7 @@ List<TimeBlock> findReservedFichasByPacientAndDate(@Param("pacientId") Integer p
 @Query("SELECT t FROM TimeBlock t WHERE t.pacient.ci = :ci")
     List<TimeBlock> findAllByPacientCi(@Param("ci") Integer ci);
 
-    @Query("SELECT t FROM TimeBlock t WHERE t.pacient.ci = :ci AND t.date = :date")
+    @Query("SELECT t FROM TimeBlock t WHERE t.pacient.ci = :ci AND t.date = :date AND t.state != 'CANCELADO'")
     List<TimeBlock> findByPacientCiAndDate(@Param("ci") Integer ci, @Param("date") LocalDate date);
 
   
