@@ -51,6 +51,13 @@ public class TimeBlockController {
         return ResponseEntity.ok(timeBlockService.prueba(dto,request));
     }
 
+    @PostMapping("/cancelarFich")
+    public ResponseEntity<ResponseDTO> cancelar(@RequestBody TimeBlockDTO dto,HttpServletRequest request){
+
+        System.out.println("LLEGO CON ESTO S: ");
+        System.out.println(dto);
+        return ResponseEntity.ok(timeBlockService.cancelarFicha(dto,request));
+    }
     @GetMapping("/get-citaPacient") //mandar token para retornar todas las citas de un paciente
     public ResponseEntity<ResponseDTO> getCitaByPacient(HttpServletRequest request){
         System.out.println("lllegooooo___________________________");

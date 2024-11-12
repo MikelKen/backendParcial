@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GlobalHandleRuntime {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ResponseDTO> handleRuntimeException(RuntimeException ex){
+        
         ResponseDTO response = ResponseDTO.builder()
                 .data(null)
                 .success(false)
@@ -20,6 +21,6 @@ public class GlobalHandleRuntime {
                 .message(ex.getMessage())
                 .build();
 
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

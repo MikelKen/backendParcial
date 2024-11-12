@@ -241,7 +241,7 @@ public class TimeBlockService {
            LocalDate dateToReserve = timeBlock.getDate();
            List<TimeBlock> reservedFichas = timeBlockRepository.findReservedFichasByPacientAndDate(pacient.getId(), dateToReserve);
 
-           if (!reservedFichas.isEmpty()) {
+           if (!reservedFichas.isEmpty() && timeBlock.getState().equals("RESERVADO")) {
                throw new RuntimeException("Ya tiene una ficha reservada para este día.");
            }
       
@@ -256,9 +256,51 @@ public class TimeBlockService {
             .build();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
-
+            
         }
     }
+
+    public ResponseDTO cancelarFicha(TimeBlockDTO dto,HttpServletRequest request){
+        try {
+           String pacientId = (String)request.getAttribute("userId");
+        System.out.println("++++++++++++++++++++++"+pacientId+"+++++++++++++++="+dto.getFichaId());
+           Optional<TimeBlock> optionalTimeBlock = timeBlockRepository.findById(dto.getFichaId());
+           TimeBlock timeBlock = optionalTimeBlock.orElseThrow(() -> new RuntimeException("Ficha no encontrada"));
+
+           if ("CANCELADO".equals(timeBlock.getState())) {
+              throw new RuntimeException("La ficha esta cancelado");
+          
+           }
+           if ("DISPONIBLE".equals(timeBlock.getState())) {
+            throw new RuntimeException("La ficha esta disponible");
+        
+            }
+
+        //    Optional<Pacient> optionalPacient = pacientRepository.findByCi(Integer.valueOf(pacientId));
+        //    Pacient pacient = optionalPacient.orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        //    LocalDate dateToReserve = timeBlock.getDate();
+        //    List<TimeBlock> reservedFichas = timeBlockRepository.findReservedFichasByPacientAndDate(pacient.getId(), dateToReserve);
+
+        //    if (!reservedFichas.isEmpty() && timeBlock.getState().equals("RESERVADO")) {
+        //        throw new RuntimeException("Ya tiene una ficha reservada para este día.");
+        //    }
+      
+           timeBlock.setState("CANCELADO");
+          // timeBlock.setPacient(pacient); 
+           timeBlockRepository.save(timeBlock);
+            return ResponseDTO.builder()
+            .data(null)
+            .success(true)
+            .error(false)
+            .message("Ficha cancelada")
+            .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+            
+        }
+    }
+
 
      public ResponseDTO getCitaByPacientID(HttpServletRequest request){
      
