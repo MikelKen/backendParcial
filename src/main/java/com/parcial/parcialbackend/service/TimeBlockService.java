@@ -231,7 +231,8 @@ public class TimeBlockService {
            TimeBlock timeBlock = optionalTimeBlock.orElseThrow(() -> new RuntimeException("Ficha no encontrada"));
 
            if (!"DISPONIBLE".equals(timeBlock.getState())) {
-               throw new RuntimeException("La ficha no disponible");
+              throw new RuntimeException("La ficha no disponible");
+          
            }
 
            Optional<Pacient> optionalPacient = pacientRepository.findByCi(Integer.valueOf(pacientId));
@@ -241,7 +242,7 @@ public class TimeBlockService {
            List<TimeBlock> reservedFichas = timeBlockRepository.findReservedFichasByPacientAndDate(pacient.getId(), dateToReserve);
 
            if (!reservedFichas.isEmpty()) {
-               throw new RuntimeException("El paciente ya tiene una ficha reservada para este día.");
+               throw new RuntimeException("Ya tiene una ficha reservada para este día.");
            }
       
            timeBlock.setState("RESERVADO");
@@ -254,7 +255,8 @@ public class TimeBlockService {
             .message("Ficha medicas")
             .build();
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage()); 
+            throw new RuntimeException(e.getMessage());
+
         }
     }
 
