@@ -33,4 +33,5 @@ public class OpeningHourController {
         return ResponseEntity.ok(openingHourService.getAllOpeningHours());
     }
 
+    
 }
