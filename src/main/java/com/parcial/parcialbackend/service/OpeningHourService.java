@@ -1,8 +1,6 @@
 package com.parcial.parcialbackend.service;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
-//import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,10 +11,9 @@ import com.parcial.parcialbackend.DTO.OpeningHourDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.entity.Doctor;
 import com.parcial.parcialbackend.entity.OpeningHour;
-import com.parcial.parcialbackend.entity.TimeBlock;
 import com.parcial.parcialbackend.repository.DoctorRepository;
 import com.parcial.parcialbackend.repository.OpeningHourRepository;
-import com.parcial.parcialbackend.repository.TimeBlockRepository;
+
 
 import lombok.AllArgsConstructor;
 
@@ -27,8 +24,7 @@ public class OpeningHourService {
     private final OpeningHourRepository openingHourRepository;
     @Autowired
     private final DoctorRepository doctorRepository;
-    @Autowired
-    private final TimeBlockRepository timeBlockRepository;
+
 
     public ResponseDTO createOpeningHour(OpeningHourDTO dto){
         try {

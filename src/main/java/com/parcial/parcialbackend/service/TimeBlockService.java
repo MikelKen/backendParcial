@@ -329,5 +329,94 @@ System.out.println(" ----------------------------------");
         }
     }
 
+    //**FUNCIONES OBTENER LAS FICHAS O CITAS DE UNA MEDICO CON TOKEN */
+    public ResponseDTO getFichDisponToken(HttpServletRequest request){
+        try {
+
+            String doctorCi  = (String)request.getAttribute("userId");
+
+            Optional<Doctor> optionalDoctor = doctorRepository.findByCi(Integer.valueOf(doctorCi));
+            Doctor doctor = optionalDoctor.orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+
+            List<TimeBlock> fichas = timeBlockRepository.findAvailableFichasByDoctorCi(Integer.valueOf(doctorCi));
+
+            if(fichas.isEmpty()){
+                throw new RuntimeException("El medico no tiene fichas disponibles");
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("doctorCi", doctorCi);
+            response.put("name", doctor.getUser().getName());
+
+            List<Map<String, Object>> fichasList = fichas.stream().map(ficha -> {
+                Map<String,Object> fichaMap = new HashMap<>();
+                fichaMap.put("id", ficha.getId());
+                fichaMap.put("date",ficha.getDate().toString());
+                fichaMap.put("day", ficha.getOpeningHour().getDayWeek());
+                fichaMap.put("turn", ficha.getOpeningHour().getTurn());
+                fichaMap.put("startTime", ficha.getStartTime().toString());
+                fichaMap.put("endTime", ficha.getEndTime().toString());
+                fichaMap.put("state", ficha.getState());
+                return fichaMap;
+            }).collect(Collectors.toList());
+
+            response.put("fichas", fichasList);
+
+            System.out.println(response);
+            return ResponseDTO.builder()
+            .data(response)
+            .success(true)
+            .error(false)
+            .message("Ficha medicas disponibles obtenidas del medico "+doctorCi)
+            .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage()); 
+        }
+    }
+
+    public ResponseDTO getFichReservToken(HttpServletRequest request){
+        try {
+
+            String doctorCi  = (String)request.getAttribute("userId");
+
+            Optional<Doctor> optionalDoctor = doctorRepository.findByCi(Integer.valueOf(doctorCi));
+            Doctor doctor = optionalDoctor.orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+
+            List<TimeBlock> fichas = timeBlockRepository.findReservedFichasByDoctorCi(Integer.valueOf(doctorCi));
+
+            if(fichas.isEmpty()){
+                throw new RuntimeException("El medico no tiene fichas reservadas");
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("doctorCi", doctorCi);
+            response.put("name", doctor.getUser().getName());
+
+            List<Map<String, Object>> fichasList = fichas.stream().map(ficha -> {
+                Map<String,Object> fichaMap = new HashMap<>();
+                fichaMap.put("id", ficha.getId());
+                fichaMap.put("date",ficha.getDate().toString());
+                fichaMap.put("day", ficha.getOpeningHour().getDayWeek());
+                fichaMap.put("turn", ficha.getOpeningHour().getTurn());
+                fichaMap.put("startTime", ficha.getStartTime().toString());
+                fichaMap.put("endTime", ficha.getEndTime().toString());
+                fichaMap.put("state", ficha.getState());
+                return fichaMap;
+            }).collect(Collectors.toList());
+
+            response.put("fichas", fichasList);
+
+            System.out.println(response);
+            return ResponseDTO.builder()
+            .data(response)
+            .success(true)
+            .error(false)
+            .message("Ficha medicas reservadas obtenidas del medico "+doctorCi)
+            .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage()); 
+        }
+    }
+
 
 }
