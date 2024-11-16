@@ -60,84 +60,34 @@ public class OpeningHourService {
             .build();
         }
     }
-
-    public ResponseDTO createOpeningHourBlock(OpeningHourDTO dto){
+    public ResponseDTO getAllOpeningHours() {
         try {
-            Doctor doctor = doctorRepository.findByCi(dto.getDoctorId()).orElseThrow(()-> new RuntimeException("Doctor not found"));
-     
-            OpeningHour openingHour = OpeningHour.builder()
-                                    .dayWeek(dto.getDayWeek())
-                                    .turn(dto.getTurn())
-                                    .startTime(dto.getStartTime())
-                                    .endTime(dto.getEndTime())
-                                    .ci_doctor(dto.getDoctorId())
-                                    .doctor(doctor)
-                                    .build();
-           
-            openingHourRepository.save(openingHour);
+            List<OpeningHour> openingHours = openingHourRepository.findAllOpeningHours();
 
-            List<TimeBlock> timeBlocks = new ArrayList<>();
-            LocalTime currentStartTime = dto.getStartTime();
-            System.out.println("insetrando");
-            while (currentStartTime.isBefore(dto.getEndTime())){
-                LocalTime currentEndTime = currentStartTime.plusHours(1);
-                
-                TimeBlock timeBlock = TimeBlock.builder()
-                                    .startTime(currentStartTime)
-                                    .endTime(currentEndTime)
-                                    .openingHour(openingHour)
-                                    .build();
-                timeBlocks.add(timeBlock);
-                System.out.println("insetrando");
-                currentStartTime = currentEndTime;
-            }
-            timeBlockRepository.saveAll(timeBlocks);
-            
+            List<OpeningHourDTO> openingHourDTOs = openingHours.stream().map(openingHour -> OpeningHourDTO.builder()
+                    .id(openingHour.getId())
+                    .dayWeek(openingHour.getDayWeek())
+                    .turn(openingHour.getTurn())
+                    .startTime(openingHour.getStartTime())
+                    .endTime(openingHour.getEndTime())
+                    .doctorId(openingHour.getDoctor().getCi())
+                    .nameDoctor(openingHour.getDoctor().getUser().getName())
+                    .build()
+            ).collect(Collectors.toList());
+
             return ResponseDTO.builder()
-            .data(openingHour)
-            .success(true)
-            .error(false)
-            .message("Opening Hour created successful ")
-            .build();
+                    .data(openingHourDTOs)
+                    .success(true)
+                    .error(false)
+                    .message("Horarios obtenidos exitosamente")
+                    .build();
         } catch (Exception e) {
-            //throw new RuntimeException(e.getMessage()); 
             return ResponseDTO.builder()
-            .data(null)
-            .success(false)
-            .error(true)
-            .message("error ")
-            .build();
-        }
-    }
-
-
-    public ResponseDTO getOpeningHourByDoctorId(Integer doctorCi){
-        try {
-           
-            //DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-           List<OpeningHour> openingHours = openingHourRepository.findByDoctorCi(doctorCi);
-
-
-           List<OpeningHourDTO> openingHourDTOs = openingHours.stream().map(openingHour -> OpeningHourDTO.builder()
-                        .doctorId(openingHour.getId())
-                        .dayWeek(openingHour.getDayWeek())
-                        .turn(openingHour.getTurn())
-                        .startTime(openingHour.getStartTime())
-                        .endTime(openingHour.getEndTime())
-                        .doctorId(openingHour.getDoctor().getCi())
-                        .nameDoctor(openingHour.getDoctor().getUser().getName())
-                        //.emTimel(openingHour.getStartTime().format(timeFormatter))
-                        .build()
-           ).collect(Collectors.toList());
-
-            return ResponseDTO.builder()
-            .data(openingHourDTOs)
-            .success(false)
-            .error(true)
-            .message(" ")
-            .build();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage()); 
+                    .data(null)
+                    .success(false)
+                    .error(true)
+                    .message("Error al obtener los horarios: " + e.getMessage())
+                    .build();
         }
     }
     

@@ -8,8 +8,9 @@ import lombok.Data;
 @Data
 @Builder
 public class OpeningHourDTO {
-    private String dayWeek;  //dia de ma semano Lunes, Martes, Miercoles, Jueves, Viernes
-    private String turn;    
+    private Integer id;
+    private String dayWeek;
+    private String turn;
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer doctorId;

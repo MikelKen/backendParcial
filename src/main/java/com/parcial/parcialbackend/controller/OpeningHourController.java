@@ -28,9 +28,9 @@ public class OpeningHourController {
         return ResponseEntity.ok(openingHourService.createOpeningHour(dto));
     }
 
-    @GetMapping("/get-all/{id}")//id es el ci del doctor
-    public ResponseEntity<ResponseDTO> getHourDoctors(@PathVariable Integer id){
-        System.out.println("el id es: ====" + id);
-        return ResponseEntity.ok(openingHourService.getOpeningHourByDoctorId(id));
+    @GetMapping("/get-all")
+    public ResponseEntity<ResponseDTO> getAllOpeningHours() {
+        return ResponseEntity.ok(openingHourService.getAllOpeningHours());
     }
+
 }

@@ -22,4 +22,7 @@ public interface OpeningHourRepository extends JpaRepository<OpeningHour,Integer
     @Query("SELECT o FROM OpeningHour o WHERE o.doctor.ci = :ciDoctor AND LOWER(o.dayWeek) = LOWER(:dayOfWeek)")
 List<OpeningHour> findByDoctorCiAndDayOfWeek(Integer ciDoctor, String dayOfWeek);
 
+@Query("SELECT o FROM OpeningHour o")
+List<OpeningHour> findAllOpeningHours();
+
 }
