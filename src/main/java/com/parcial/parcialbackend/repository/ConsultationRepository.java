@@ -19,4 +19,8 @@ public interface ConsultationRepository extends JpaRepository<Consultation,Integ
   
     @Query("SELECT c FROM Consultation c WHERE c.medicalRecord.id = :medicalRecordId")
     List<Consultation> findByMedicalRecordId(@Param("medicalRecordId") Integer medicalRecordId);
+
+    @Query("SELECT c FROM Consultation c WHERE c.medicalRecord.pacient.ci = :ci")
+    List<Consultation> findConsultationsByPacientCi(@Param("ci") Integer ci);
+
 }

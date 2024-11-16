@@ -42,6 +42,7 @@ public class PreConsultationService {
             .weight(dto.getWeight())
             .temperature(dto.getTemperature())
             .date(dto.getDate())
+            .pacientId(dto.getPacientId())
             .enfermera(enfermera)
             .cita(cita)
             .build();

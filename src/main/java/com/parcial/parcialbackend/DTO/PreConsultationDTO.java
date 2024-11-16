@@ -15,6 +15,7 @@ public class PreConsultationDTO {
     private Integer heartRate;//frecuencia cardiaca
     private BigDecimal weight;  //peso
     private LocalDate date;
+    private Integer pacientId;
     private Integer citaId;//id de la cita
     
 }

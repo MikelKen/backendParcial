@@ -24,6 +24,12 @@ public class PreConsultController {
     private final PreConsultationService preConsultationService;
 
     @PostMapping("/create/{id}") //mardar el ci de la enfermera
+    public ResponseEntity<ResponseDTO> createId(@RequestBody PreConsultationDTO dto, @PathVariable Integer id){
+        
+        return ResponseEntity.ok(preConsultationService.createPreConsult(dto, id));
+    }
+
+    @PostMapping("/create") //mardar el ci de la enfermera
     public ResponseEntity<ResponseDTO> create(@RequestBody PreConsultationDTO dto, @PathVariable Integer id){
         
         return ResponseEntity.ok(preConsultationService.createPreConsult(dto, id));
