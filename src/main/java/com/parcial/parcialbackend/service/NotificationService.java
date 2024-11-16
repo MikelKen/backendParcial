@@ -80,9 +80,9 @@ public class NotificationService {
         try {
             
             String pacientId  = (String)request.getAttribute("userId");
-System.out.println("******************** "+pacientId);
+
             List<Notification> notifications = notificationRepository.findByPacient_Ci(Integer.valueOf(pacientId));
-    System.out.println("##################"+notifications);
+  
             return ResponseDTO.builder()
             .data(notifications)
             .success(true)
