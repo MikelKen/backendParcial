@@ -48,7 +48,7 @@ public class TimeBlockController {
 
         System.out.println("LLEGO CON ESTO S: ");
         System.out.println(dto);
-        return ResponseEntity.ok(timeBlockService.prueba(dto,request));
+        return ResponseEntity.ok(timeBlockService.pruebamovil(dto,request));
     }
 
     @PostMapping("/cancelarFich")

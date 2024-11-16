@@ -12,6 +12,7 @@ import com.parcial.parcialbackend.DTO.ConsultationDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.service.ConsultationService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -33,6 +34,11 @@ public class ConsultatioController {
     @GetMapping("/get-consultHistori/{id}") //mandar el id del historial para retornar sus consultas
     public ResponseEntity<ResponseDTO> getConsultHistory(@PathVariable Integer id){
         return ResponseEntity.ok(consultationService.getConsultsByHistoryId(id));
+    }
+
+    @GetMapping("/get-consultHistori") //mandar el token del historial para retornar sus consultas
+    public ResponseEntity<ResponseDTO> getConsultHistoryUser(HttpServletRequest request){
+        return ResponseEntity.ok(consultationService.getConsultsByHistoryUser(request));
     }
 
 }

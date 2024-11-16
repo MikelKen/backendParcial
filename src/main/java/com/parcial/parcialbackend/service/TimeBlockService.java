@@ -223,10 +223,10 @@ public class TimeBlockService {
     }
 
 
-    public ResponseDTO prueba(TimeBlockDTO dto,HttpServletRequest request){
+    public ResponseDTO pruebamovil(TimeBlockDTO dto,HttpServletRequest request){
         try {
            String pacientId = (String)request.getAttribute("userId");
-        System.out.println("++++++++++++++++++++++"+pacientId+"+++++++++++++++="+dto.getFichaId());
+    
            Optional<TimeBlock> optionalTimeBlock = timeBlockRepository.findById(dto.getFichaId());
            TimeBlock timeBlock = optionalTimeBlock.orElseThrow(() -> new RuntimeException("Ficha no encontrada"));
 
@@ -234,7 +234,7 @@ public class TimeBlockService {
               throw new RuntimeException("La ficha no disponible");
           
            }
-
+System.out.println(" ----------------------------------");
            Optional<Pacient> optionalPacient = pacientRepository.findByCi(Integer.valueOf(pacientId));
            Pacient pacient = optionalPacient.orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
 
@@ -276,15 +276,7 @@ public class TimeBlockService {
         
             }
 
-        //    Optional<Pacient> optionalPacient = pacientRepository.findByCi(Integer.valueOf(pacientId));
-        //    Pacient pacient = optionalPacient.orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
-
-        //    LocalDate dateToReserve = timeBlock.getDate();
-        //    List<TimeBlock> reservedFichas = timeBlockRepository.findReservedFichasByPacientAndDate(pacient.getId(), dateToReserve);
-
-        //    if (!reservedFichas.isEmpty() && timeBlock.getState().equals("RESERVADO")) {
-        //        throw new RuntimeException("Ya tiene una ficha reservada para este día.");
-        //    }
+       
       
            timeBlock.setState("CANCELADO");
           // timeBlock.setPacient(pacient); 

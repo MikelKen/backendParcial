@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,8 +41,10 @@ public class PreConsultation {
 
     private LocalDate date;
 
-    @OneToOne
-    @JoinColumn(name = "enfermeraId", referencedColumnName = "ci", unique = true)
+    private Integer pacientId;
+
+    @ManyToOne
+    @JoinColumn(name = "enfermeraId", referencedColumnName = "ci")
     private Enfermera enfermera;
 
     @ManyToOne
