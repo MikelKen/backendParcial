@@ -35,6 +35,8 @@ public class MedicalExamination {// examen medico
 
     private String result;
 
+    private String image;
+
      @ManyToOne
     @JoinColumn(name = "paient_id", referencedColumnName = "id")
     private Pacient pacient;

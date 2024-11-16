@@ -36,9 +36,14 @@ public class ConsultatioController {
         return ResponseEntity.ok(consultationService.getConsultsByHistoryId(id));
     }
 
-    @GetMapping("/get-consultHistori") //mandar el token del historial para retornar sus consultas
+    @GetMapping("/get-consultHistori") //mandar el token del paciente  para que pueda ver su historial clinico (son todas sus consultas el historial)
     public ResponseEntity<ResponseDTO> getConsultHistoryUser(HttpServletRequest request){
         return ResponseEntity.ok(consultationService.getConsultsByHistoryUser(request));
+    }
+
+    @GetMapping("/get-consultHistoriDoctor/:{id}") //mandar el ci del paciente  para que pueda el medico pueda ver su historial clinico del paciente (son todas sus consultas el historial)
+    public ResponseEntity<ResponseDTO> getConsultHistoryDoctor(@PathVariable Integer id){
+        return ResponseEntity.ok(consultationService.getConsultsByHistoryDoctor(id));
     }
 
 }
