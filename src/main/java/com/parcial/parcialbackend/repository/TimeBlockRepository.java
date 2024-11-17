@@ -29,6 +29,9 @@ List<TimeBlock> findAllFichasByDoctorCi(Integer doctorCi);
 @Query("SELECT t FROM TimeBlock t WHERE t.openingHour.doctor.ci = :doctorCi AND t.state = 'DISPONIBLE'")
     List<TimeBlock> findAvailableFichasByDoctorCi(Integer doctorCi);
 
+@Query("SELECT t FROM TimeBlock t WHERE t.openingHour.doctor.ci = :doctorCi AND t.state = 'RESERVADO'")
+List<TimeBlock> findReservedFichasByDoctorCi(Integer doctorCi);
+
 @Query("SELECT t FROM TimeBlock t WHERE t.pacient.id = :pacientId AND t.date = :date AND t.state = 'RESERVADO'")
 List<TimeBlock> findReservedFichasByPacientAndDate(@Param("pacientId") Integer pacientId, @Param("date") LocalDate date);
 

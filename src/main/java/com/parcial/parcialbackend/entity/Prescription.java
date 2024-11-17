@@ -1,9 +1,6 @@
 package com.parcial.parcialbackend.entity;
 
-
 import java.time.LocalDate;
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,31 +20,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table
-public class MedicalExamination {// examen medico
+public class Prescription {//receta medica
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String medicine; //meicamento
+    private String dosis; 
+    private String frecuency; //frecuencia
+    private String duration;
+    private String observation;
     private LocalDate date;
 
-    private String type;
-
-    private String result;
-
-    private String image;
-
-     @ManyToOne
-    @JoinColumn(name = "paient_id", referencedColumnName = "id")
-    private Pacient pacient;
-
     @ManyToOne
-    @JoinColumn(name = "consultationId", referencedColumnName = "id")
-    private Consultation consultation;
+    @JoinColumn(name= "consultationId", referencedColumnName = "id")
+    private Consultation consulta;
+
 
     @PrePersist
     protected void onCreate() {
         this.date = LocalDate.now();
     }
-
 }

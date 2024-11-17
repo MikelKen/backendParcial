@@ -46,7 +46,6 @@ public class TimeBlockController {
     @PostMapping("/prueba")
     public ResponseEntity<ResponseDTO> prueba(@RequestBody TimeBlockDTO dto,HttpServletRequest request){
 
-        System.out.println("LLEGO CON ESTO S: ");
         System.out.println(dto);
         return ResponseEntity.ok(timeBlockService.pruebamovil(dto,request));
     }
@@ -54,13 +53,23 @@ public class TimeBlockController {
     @PostMapping("/cancelarFich")
     public ResponseEntity<ResponseDTO> cancelar(@RequestBody TimeBlockDTO dto,HttpServletRequest request){
 
-        System.out.println("LLEGO CON ESTO S: ");
-        System.out.println(dto);
         return ResponseEntity.ok(timeBlockService.cancelarFicha(dto,request));
     }
+
     @GetMapping("/get-citaPacient") //mandar token para retornar todas las citas de un paciente
     public ResponseEntity<ResponseDTO> getCitaByPacient(HttpServletRequest request){
-        System.out.println("lllegooooo___________________________");
         return ResponseEntity.ok(timeBlockService.getCitaByPacientID(request));
     }
+
+    //**ESTA RUTAS SON PARA QUE UN MEDICO VEA SUS CITAS O FICHAS DISPONIBLES  O RESERVADAS */    
+    @GetMapping("/getFichaDisp") //mandar el token para que retorne todas las fichas dispoinbles de un medico 
+    public ResponseEntity<ResponseDTO> getFichDisponDoctorToken(HttpServletRequest request){
+        return ResponseEntity.ok(timeBlockService.getFichDisponToken(request));
+    }
+
+    @GetMapping("/getFichaReserv") //mandar el token para que retorne todas las fichas reservadas o fichas que tiene que atender medico 
+    public ResponseEntity<ResponseDTO> getFichReserDoctorToken(HttpServletRequest request){
+        return ResponseEntity.ok(timeBlockService.getFichReservToken(request));
+    }
+
 }
