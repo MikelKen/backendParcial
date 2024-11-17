@@ -46,4 +46,8 @@ public class PreConsultController {
        
         return ResponseEntity.ok(preConsultationService.getPreConsutByIdCita(dto));
     }
+    @GetMapping("/get-one/{citaId}")
+    public ResponseEntity<ResponseDTO> getPreConsultByCitaId(@PathVariable Integer citaId) {
+        return ResponseEntity.ok(preConsultationService.getPreConsutByIdCita(citaId));
+    }
 }

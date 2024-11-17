@@ -133,4 +133,71 @@ public class PreConsultationService {
         }
     }
 
+    public ResponseDTO getPreConsutByIdCita(Integer citaId){
+        try {
+            PreConsultation preConsult  = preConsultationRepository.findByCitaId(citaId)
+                .orElseThrow(() -> new RuntimeException("Pre-Consult not found"));
+    
+            System.out.println("PreConsultation encontrada: " + preConsult);
+    
+            Map<String, Object> preConsultMap = new HashMap<>();
+    
+            preConsultMap.put("id", preConsult.getId());
+            preConsultMap.put("arterialPressure", preConsult.getArterialPressure());
+            preConsultMap.put("heartRate", preConsult.getHeartRate());
+            preConsultMap.put("temperature", preConsult.getTemperature());
+            preConsultMap.put("weight", preConsult.getWeight());
+            preConsultMap.put("date", preConsult.getDate());
+    
+            if (preConsult.getEnfermera() != null && preConsult.getEnfermera().getUser() != null) {
+                preConsultMap.put("enfermeraName", preConsult.getEnfermera().getUser().getName());
+            } else {
+                preConsultMap.put("enfermeraName", "N/A");
+            }
+    
+            if (preConsult.getCita() != null) {
+                if (preConsult.getCita().getOpeningHour() != null && preConsult.getCita().getOpeningHour().getDoctor() != null) {
+                    preConsultMap.put("doctorName", preConsult.getCita().getOpeningHour().getDoctor().getUser().getName());
+                    preConsultMap.put("specialityName", preConsult.getCita().getOpeningHour().getDoctor().getSpeciality().getName());
+                } else {
+                    preConsultMap.put("doctorName", "N/A");
+                    preConsultMap.put("specialityName", "N/A");
+                }
+    
+                if (preConsult.getCita().getPacient() != null) {
+                    preConsultMap.put("patientName", preConsult.getCita().getPacient().getUser().getName());
+                    preConsultMap.put("patientAge", preConsult.getCita().getPacient().getAge());
+                    preConsultMap.put("patientSex", preConsult.getCita().getPacient().getSexo());
+                } else {
+                    preConsultMap.put("patientName", "N/A");
+                    preConsultMap.put("patientAge", "N/A");
+                    preConsultMap.put("patientSex", "N/A");
+                }
+    
+                preConsultMap.put("citaDate", preConsult.getCita().getDate());
+                preConsultMap.put("citaState", preConsult.getCita().getState());
+            } else {
+                preConsultMap.put("doctorName", "N/A");
+                preConsultMap.put("specialityName", "N/A");
+                preConsultMap.put("patientName", "N/A");
+                preConsultMap.put("patientAge", "N/A");
+                preConsultMap.put("patientSex", "N/A");
+                preConsultMap.put("citaDate", "N/A");
+                preConsultMap.put("citaState", "N/A");
+            }
+    
+            System.out.println("Datos de preConsultMap: " + preConsultMap);
+    
+            return ResponseDTO.builder()
+                .data(preConsultMap)
+                .success(true)
+                .error(false)
+                .message("Preconsulta obtenida exitosamente")
+                .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage()); 
+        }
+    }
+    
+
 }

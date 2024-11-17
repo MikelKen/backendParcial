@@ -67,7 +67,7 @@ public class AuthService {
             .password(passwordEncoder.encode(request.getPassword()))
             .phone(request.getPhone())
             .address(request.getAddress())
-            .role(Role.ADMINISTRADOR)
+            .role(Role.ENFERMERA)
             .build();
         
         userRepository.save(user);    

@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class EnfermeraDTO {
-    Integer ci; //ci del medico
+    Integer ci; 
     String name;
     String email;
     String password;
