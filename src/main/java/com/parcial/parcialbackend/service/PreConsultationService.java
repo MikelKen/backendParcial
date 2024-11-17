@@ -198,6 +198,29 @@ public class PreConsultationService {
             throw new RuntimeException(e.getMessage()); 
         }
     }
+
+   
+
+    public ResponseDTO getPreConsultationsByCitaId(Integer citaId) {
+        try {
+            // Usa el método que devuelve una lista
+            List<PreConsultation> preConsultations = preConsultationRepository.findAllByCitaId(citaId);
+
+            if (preConsultations.isEmpty()) {
+                throw new RuntimeException("No se encontraron preconsultas para el ID de cita proporcionado.");
+            }
+
+            return ResponseDTO.builder()
+                .data(preConsultations)
+                .success(true)
+                .error(false)
+                .message("Preconsultas encontradas.")
+                .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+}
+
     
 
-}
