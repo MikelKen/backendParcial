@@ -328,6 +328,25 @@ System.out.println(" ----------------------------------");
             throw new RuntimeException(e.getMessage()); 
         }
     }
+    public ResponseDTO getAllFichasByDoctor(Integer doctorId) {
+        List<TimeBlock> allFichas = timeBlockRepository.findAllFichasByDoctorCi(doctorId);
+    
+        Map<String, List<TimeBlock>> fichasCategorizadas = allFichas.stream()
+            .collect(Collectors.groupingBy(TimeBlock::getState));
+    
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("DISPONIBLES", fichasCategorizadas.getOrDefault("DISPONIBLE", new ArrayList<>()));
+        responseData.put("RESERVADAS", fichasCategorizadas.getOrDefault("RESERVADO", new ArrayList<>()));
+        responseData.put("CANCELADAS", fichasCategorizadas.getOrDefault("CANCELADO", new ArrayList<>()));
+    
+        return ResponseDTO.builder()
+            .data(responseData)
+            .success(true)
+            .error(false)
+            .message("Fichas obtenidas correctamente")
+            .build();
+    }
+    
 
     //**FUNCIONES OBTENER LAS FICHAS O CITAS DE UNA MEDICO CON TOKEN */
     public ResponseDTO getFichDisponToken(HttpServletRequest request){

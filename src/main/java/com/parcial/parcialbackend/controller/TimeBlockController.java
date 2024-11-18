@@ -72,4 +72,10 @@ public class TimeBlockController {
         return ResponseEntity.ok(timeBlockService.getFichReservToken(request));
     }
 
+
+    @GetMapping("/get-all-fichas/{id}") // Retorna todas las fichas (DISPONIBLES, RESERVADAS, CANCELADAS) de un médico
+    public ResponseEntity<ResponseDTO> getAllFichasByDoctor(@PathVariable Integer id) {
+    return ResponseEntity.ok(timeBlockService.getAllFichasByDoctor(id));
+    }
+
 }
