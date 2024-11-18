@@ -1,6 +1,7 @@
 package com.parcial.parcialbackend.service;
 
 
+
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
@@ -36,6 +37,8 @@ public class TimeBlockService {
     private final DoctorRepository doctorRepository;
     private final OpeningHourRepository openingHourRepository;
     private final PacientRepository pacientRepository;
+    // @Autowired
+    // private EmailService emailService;
 
 
     public ResponseDTO createSheet(TimeBlockDTO dto){
@@ -210,6 +213,14 @@ public class TimeBlockService {
             timeBlock.setPacient(pacient); 
             timeBlockRepository.save(timeBlock);
 
+
+            //enviar correo al paciente
+            // String email = pacient.getUser().getEmail();
+            // String subject = "Confirmación de Reserva de Ficha Médica";
+            // String text = "Estimado(a) " + pacient.getUser().getName() + ",\n\n" +
+            //               "Su ficha médica ha sido reservada exitosamente para el día " + dateToReserve + ".\n\n" +
+            //               "Saludos,\nClínica Veterinaria";
+            // emailService.sendEmail(email, subject, text);
 
             return ResponseDTO.builder()
             .data(timeBlock)
