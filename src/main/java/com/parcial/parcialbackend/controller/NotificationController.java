@@ -2,7 +2,9 @@ package com.parcial.parcialbackend.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +30,10 @@ public class NotificationController {
     @GetMapping("/get-notifPacient")//mandar el token del paciente para que retorne todas sus notificaciones
     public ResponseEntity<ResponseDTO> getDoctors(HttpServletRequest request){
         return ResponseEntity.ok(notificationService.getNotificationByPacient(request));
+    }
+
+    @PutMapping("/put-notifPacient/{id}")//mandar el token del paciente para que retorne todas sus notificaciones
+    public ResponseEntity<ResponseDTO> putNotification( @PathVariable Integer id){
+        return ResponseEntity.ok(notificationService.updateNotificationId(id));
     }
 }
