@@ -60,6 +60,7 @@ public class NotificationService {
                                     .doctorId(Integer.valueOf(doctorId))
                                     .message(dto.getMessage())
                                     .pacient(pacient)
+                                    .state(false)
                                     .detail(detail)
                                     .build();
 
@@ -87,7 +88,26 @@ public class NotificationService {
             .data(notifications)
             .success(true)
             .error(false)
-            .message("Notification created successfull ")
+            .message("Notificaciones obtenidas ")
+            .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    //actualiza el estado de la notificacion
+    public ResponseDTO updateNotificationId( Integer id){
+        try {
+            
+            
+            Notification notification = notificationRepository.findById(id).orElseThrow(()-> new RuntimeException("Notificacion no encontrada"));
+            notification.setState(true);
+            notificationRepository.save(notification);
+            return ResponseDTO.builder()
+            .data(notification)
+            .success(true)
+            .error(false)
+            .message("Estado modificado")
             .build();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

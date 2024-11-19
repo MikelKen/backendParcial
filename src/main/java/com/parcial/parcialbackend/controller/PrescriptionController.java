@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import com.parcial.parcialbackend.DTO.PrescriptionDTO;
 import com.parcial.parcialbackend.DTO.ResponseDTO;
 import com.parcial.parcialbackend.entity.Prescription;

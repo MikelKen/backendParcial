@@ -31,6 +31,7 @@ public class Notification {
     private String message;
     private LocalDate date;
     private String detail;
+    private boolean state;//false si no a leido y true si ha leido
 
     @ManyToOne
     @JoinColumn(name = "pacient_id", referencedColumnName = "id")
