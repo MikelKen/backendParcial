@@ -105,6 +105,24 @@ public class ConsultationService {
         }        
     }
 
+
+
+    public ResponseDTO updateConsult(Integer id, ConsultationDTO updatedConsult) {
+        return consultationRepository.findById(id)
+            .map(consulta -> {
+                consulta.setDate(updatedConsult.getDate());
+                consulta.setDiagnosis(updatedConsult.getDiagnosis());
+                consulta.setState(updatedConsult.getState());
+                consulta.setObservation(updatedConsult.getObservation());
+                consulta.setdoctorid(updatedConsult.getDoctorId());
+                consulta.setPreConsultation(null);(updatedConsult.getPreCosultId());
+                consulta.setMedicalRecordId(updatedConsult.getMedicalRecordId());
+                consultationRepository.save(consulta);
+                return new ResponseDTO(true, "Consulta actualizada exitosamente", consulta);
+            })
+            .orElseThrow(() -> new ResourceNotFoundException());
+    }
+    
     public ResponseDTO getConsultsByHistoryUser1(HttpServletRequest request) {
         try {
             String pacientId = (String)request.getAttribute("userId");

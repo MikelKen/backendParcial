@@ -13,4 +13,10 @@ import com.parcial.parcialbackend.entity.Prescription;
 public interface PrescriptionRepository extends JpaRepository<Prescription, Integer> {
     @Query("SELECT p FROM Prescription p WHERE p.consulta.id = :consultationId")
     List<Prescription> findByConsultationId(@Param("consultationId") Integer consultationId);
+
+    @Query("SELECT p FROM Prescription p WHERE p.consulta.medicalRecord.pacient.id = :patientId")
+List<Prescription> findByPatientId(@Param("patientId") Integer patientId);
+
+
+    
 }

@@ -37,7 +37,6 @@ public class Prescription {//receta medica
     @JoinColumn(name= "consultationId", referencedColumnName = "id")
     private Consultation consulta;
 
-
     @PrePersist
     protected void onCreate() {
         this.date = LocalDate.now();
